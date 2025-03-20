@@ -8,16 +8,20 @@ interface State {
   currTime: string;
 }
 
+const getCurrentTime = () => {
+  return new Date().toUTCString().slice(-12, -4);
+};
+
 export class Clock extends React.Component<Props, State> {
   state = {
-    currTime: new Date().toUTCString().slice(-12, -4),
+    currTime: getCurrentTime(),
   };
 
   timerIdClock = 0;
 
   componentDidMount() {
     this.timerIdClock = window.setInterval(() => {
-      this.setState({ currTime: new Date().toUTCString().slice(-12, -4) });
+      this.setState({ currTime: getCurrentTime() });
     }, 1000);
   }
 
@@ -42,6 +46,7 @@ export class Clock extends React.Component<Props, State> {
 
   render(): React.ReactNode {
     const { name } = this.props;
+    const { currTime } = this.state;
 
     return (
       <div className="Clock">
@@ -49,7 +54,7 @@ export class Clock extends React.Component<Props, State> {
 
         {' time is '}
 
-        <span className="Clock__time">{this.state.currTime}</span>
+        <span className="Clock__time">{currTime}</span>
       </div>
     );
   }
